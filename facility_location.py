@@ -82,11 +82,16 @@ def solve_facility_location():
     model.capacity_constraint = pyo.Constraint(model.J, rule=capacity_rule)
  
     solver = SolverFactory('appsi_highs')
-    results = solver.solve(model)
+    results = solver.solve(model, tee=True)
+    # show status 
+    # st.write("Solver Status:", results.solver.status)
+    
+    # st.write("Solver Termination Condition:", results.solver.termination_condition)
     return model, results
 
 if st.button("Run Optimization"):
     model, results = solve_facility_location()
+    
     st.success("✅ Optimization Solved Successfully!")
     
     # Display results (same as before)
